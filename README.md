@@ -1,10 +1,10 @@
 # flask-website-with-mongodb
 
-In this project, I used flask for backend, mongodb as dtabase and for templating I used html jinja and frontend some simple bootstrap to make better design.
+In this project, I used flask for backend, mongodb as database and for templating I used html jinja and frontend some bootstrap to make better design.
 
 steps to use this project:
 
-1) clove this repository
+1) clone this repository
 
 2) create a virtual environment
 
