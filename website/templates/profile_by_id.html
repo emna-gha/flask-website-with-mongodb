@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="card-wrapper">
+    <div class="card">
+      <h1 class="center">Profile of {{ user.username }} </h1>
+    
+    </div>
+
+    <div class="card">
+
+      <h2 class="center">Your Info</h2>
+
+      <p>
+        <strong>ID:</strong> {{ user._id }}<br>
+        <strong>userName:</strong> {{ user.username }}<br>
+        <strong>Email:</strong> {{ user.email }}
+        <strong>Balance:</strong> {{ user.balance }}
+
+      </p>
+    
+    </div>
+
+  </div>
+  
+{% endblock %}

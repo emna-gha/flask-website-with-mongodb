@@ -33,8 +33,18 @@ def logout():
 
 @auth.route('/list-users')
 def getlist():
+    if request.method== "POST":
+        search=request.form.get('search')
+        users=db.users.find_one({'username':search})
+        return redirect(url_for('profile', id=users['_id']))
+        #return render_template('list-users.html',users=db.users.find_one({'userName':{'$gt': search}}))
     return render_template('list-users.html',users=db.users.find())
     
+@auth.route('/profile/<id>', methods=['GET','POST'])
+def profile_by_id(id):
+    user=db.users.find_one({'_id':id})
+    return render_template('profile_by_id.html',user=user)
+
 
 @auth.route('/profile', methods=['GET','POST'])
 def profile():
@@ -84,7 +94,7 @@ def sign_up():
             # add user to database
             User().signup()
             flash ('A new account is created', category='success')
-            return redirect('/profile')
+            return redirect('/list-users')
        
     return render_template('sign-up.html')
 

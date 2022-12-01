@@ -23,6 +23,7 @@ class User:
         "_id":uuid.uuid4().hex,
         "username":request.form.get('userName'),
         "email":request.form.get("email"),
+        "balance":request.form.get("balance"),
         "password":request.form.get('password1')
         }
         #encrypt the password for security 
