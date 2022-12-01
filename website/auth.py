@@ -18,10 +18,9 @@ def login():
                 flash('Logged in successfully',category='sucess')
                 User().start_session(user)
                 #login_user(user, remember=True)#remember that the user is logged in until he restarts his session
-                return redirect('/profile')
+                return redirect('/list-users')
             else:
-                flash('Incorrect password,try again', category='error')
-                
+                flash('Incorrect password,try again', category='error')      
         else:
             flash('email does not exist', category='error')   
     return render_template('login.html')
@@ -32,10 +31,14 @@ def logout():
     session.clear()
     return redirect('/')
 
+@auth.route('/list-users')
+def getlist():
+    return render_template('list-users.html',users=db.users.find())
+    
 
 @auth.route('/profile', methods=['GET','POST'])
 def profile():
-        return render_template('profile.html')
+    return render_template('profile.html')
  
  
 @auth.route('/change_password', methods=['GET','POST'])
@@ -52,9 +55,6 @@ def changepassword():
             db.users.update_one( {'email': session['user']['email']}, {'$set': {'password': new_password}})
             flash('Password Changed Successfully',category='success')
             return redirect('/profile')
-        #else:
-            #flash('Invalid Email',category='error')
-        
     else:
         return render_template('change_password.html')
         
@@ -81,10 +81,8 @@ def sign_up():
         elif db.users.find_one ({ "email": email }):
             flash('Can not use this email.It already exists', category='error')
         else:
-            new_user=User()
-            User().signup()
-            #login_user(new_user, remember=True)
             # add user to database
+            User().signup()
             flash ('A new account is created', category='success')
             return redirect('/profile')
        
