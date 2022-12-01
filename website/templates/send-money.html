@@ -1,0 +1,29 @@
+{% extends "base.html"%}
+
+{% block title %}
+   send-money
+{% endblock %}
+
+{% block content %}
+
+<h2 class="center">Send money</h2>
+    <div class="card">
+        <div class="card-body">
+          <form action="" method="POST">
+            <div class="form-group">
+                <label for ="password2">Money</label>
+                <input  type="text" value="100"
+                class="form-control" 
+                id="money" 
+                name="money" 
+                />
+
+
+            <button type="submit" class="btn btn-primary"> confirm </button>
+            <div class="center">
+                <a href="/list-users" class="btn btn-secondary">go back</a>  
+            </div>
+          </form>
+        </div>
+    </div>
+{% endblock %}

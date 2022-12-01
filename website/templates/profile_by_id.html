@@ -9,15 +9,18 @@
 
     <div class="card">
 
-      <h2 class="center">Your Info</h2>
+      <h2 class="center">Info</h2>
 
       <p>
         <strong>ID:</strong> {{ user._id }}<br>
         <strong>userName:</strong> {{ user.username }}<br>
         <strong>Email:</strong> {{ user.email }}
-        <strong>Balance:</strong> {{ user.balance }}
 
       </p>
+      <div class="center">
+        <a href="/send-money" class="btn btn-primary">Send money</a>
+        
+      </div>
     
     </div>
 

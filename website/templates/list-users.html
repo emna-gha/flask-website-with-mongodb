@@ -33,7 +33,13 @@
                         <td>{{user.email}}</td>
                         <td>{{user.balance}}</td>
 
-                        
+                        <td>
+                            
+                            <a href="/profile/{{user._id}}">
+                                <button class="btn btn-warning">see profile</button>
+                            </a>
+                           
+                        </td>
                         
                     </tr>
                     {% endfor %}

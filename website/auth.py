@@ -2,22 +2,19 @@ from flask import Blueprint,render_template,request,flash,redirect,session,url_f
 from .models import User 
 from . import db
 from passlib.hash import pbkdf2_sha256
-from flask_login import login_user, login_required, logout_user, current_user
-
 
 auth = Blueprint('auth', __name__)
-
 
 @auth.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         user = db.users.find_one ({ "email": request.form.get('email') })
+        #in case the email exists in db succes otherwise error
         if user:
-            #check if the user with that email has a matching password in db with the one entered to login
+            #check if the password in db matches the one entered by user
             if pbkdf2_sha256.verify(request.form.get('password'), user['password']) :
                 flash('Logged in successfully',category='sucess')
                 User().start_session(user)
-                #login_user(user, remember=True)#remember that the user is logged in until he restarts his session
                 return redirect('/list-users')
             else:
                 flash('Incorrect password,try again', category='error')      
@@ -37,7 +34,7 @@ def getlist():
         search=request.form.get('search')
         users=db.users.find_one({'username':search})
         return redirect(url_for('profile', id=users['_id']))
-        #return render_template('list-users.html',users=db.users.find_one({'userName':{'$gt': search}}))
+       
     return render_template('list-users.html',users=db.users.find())
     
 @auth.route('/profile/<id>', methods=['GET','POST'])
@@ -50,7 +47,22 @@ def profile_by_id(id):
 def profile():
     return render_template('profile.html')
  
- 
+@auth.route('/send-money', methods=['GET','POST'])
+def sendmoney():
+    if request.method == 'POST':
+        money=request.form.get('money')
+        #verify whether the user has enough balance or not
+        if int(money) > int(session['user']['balance']):
+            flash('You do not have enough money to send',category='error')
+        else:
+            flash('Money sent successfully',category='success')
+            #update the current balance of the sender after sending money
+            new_balance= (int(session['user']['balance']) - int(money))
+            db.users.update_one( {'email': session['user']['email']}, {'$set': {'balance': str(new_balance)}})
+            
+    return render_template('send-money.html')
+
+
 @auth.route('/change_password', methods=['GET','POST'])
 def changepassword():
     if request.method == 'POST':
