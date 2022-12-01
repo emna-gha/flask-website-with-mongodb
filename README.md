@@ -14,6 +14,6 @@ steps to use this project:
 
 5) make sure you have installed flask, mongodb and the libraries nedded
 
-6) to run the code: python main.app
+6) to run the code: python main.py
 
 This project includes some screenshots for the demo if needed.
